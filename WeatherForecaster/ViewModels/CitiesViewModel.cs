@@ -41,5 +41,13 @@ namespace WeatherForecaster.ViewModels
             get => (GetValue(CitiesTextBoxTextDp) as string);
             set => SetValue(CitiesTextBoxTextDp, value);
         }
+
+        private static DependencyProperty SelectedCityDp = DependencyProperty.Register("SelectedCity", typeof(string), typeof(CitiesViewModel), new PropertyMetadata("London"));
+
+        public string SelectedCity
+        {
+            get => (GetValue(SelectedCityDp) as string);
+            set => SetValue(SelectedCityDp, value);
+        }
     }
 }

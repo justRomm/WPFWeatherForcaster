@@ -127,7 +127,7 @@ namespace WeatherForecaster.Rest
             [JsonProperty(PropertyName = "coord")]
             public Coord coord;
             [JsonProperty(PropertyName = "weather")]
-            public List<CurrentWeather> weather;
+            public List<InnerWeather> weather;
             [JsonProperty(PropertyName = "base")]
             public string BaseInfo;
             [JsonProperty(PropertyName = "main")]

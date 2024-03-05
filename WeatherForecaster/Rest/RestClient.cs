@@ -11,14 +11,13 @@ using WeatherForecaster.Rest.JsonClasses;
 
 namespace WeatherForecaster.Rest
 {
-    public class RestClient
+    public static class RestClient
     {
-        private const string APIKey = "fe14f9bc8fcee04ee1fdb69408290496";
-        private const int maxTimeout = 20000;
-        private const string baseUri = "https://api.openweathermap.org/data/2.5";
+        private const string _APIKey = "fe14f9bc8fcee04ee1fdb69408290496";
+        private const int _maxTimeout = 20000;
+        private const string _weatherUrl = "https://api.openweathermap.org/data/2.5";
+        private const string _geoUrl = "http://api.openweathermap.org/geo/1.0";
         
-        public RestClient() { }
-
         private static void ThrowOnErrorResponse(RestResponse response)
         {
             if (!response.IsSuccessful || response.StatusCode != HttpStatusCode.OK)
@@ -26,17 +25,16 @@ namespace WeatherForecaster.Rest
                 throw new RestClientErrorException(response);
             }
         }
-
+        
         public static CurrentWeather GetCurrentWeather(double lat, double lon)
         {
             using var client = new RestSharp.RestClient(new RestClientOptions
             {
-                MaxTimeout = maxTimeout,
-                BaseUrl = new Uri($"{baseUri}/weather?lat={lat}&lon={lon}&units=metric&appid={APIKey}")
+                MaxTimeout = _maxTimeout,
+                BaseUrl = new Uri($"{_weatherUrl}/weather?lat={lat}&lon={lon}&units=metric&appid={_APIKey}")
             });
             var request = new RestRequest("", Method.Get);
             RestResponse restResponse = client.Execute(request);
-
 
             ThrowOnErrorResponse(restResponse);
 
@@ -47,13 +45,11 @@ namespace WeatherForecaster.Rest
         {
             using var client = new RestSharp.RestClient(new RestClientOptions
             {
-                MaxTimeout = maxTimeout,
-                BaseUrl = new Uri($"http://api.openweathermap.org/geo/1.0/direct?q={city}&limit=1&appid={APIKey}")
+                MaxTimeout = _maxTimeout,
+                BaseUrl = new Uri($"{_geoUrl}/direct?q={city}&limit=1&appid={_APIKey}")
             });
             var request = new RestRequest("", Method.Get);
             RestResponse restResponse = client.Execute(request);
-
-
 
             ThrowOnErrorResponse(restResponse);
 
@@ -65,8 +61,8 @@ namespace WeatherForecaster.Rest
         {
             using var client = new RestSharp.RestClient(new RestClientOptions
             {
-                MaxTimeout = maxTimeout,
-                BaseUrl = new Uri($"{baseUri}/air_pollution?lat={lat}&lon={lon}&units=metric&appid={APIKey}")
+                MaxTimeout = _maxTimeout,
+                BaseUrl = new Uri($"{_weatherUrl}/air_pollution?lat={lat}&lon={lon}&units=metric&appid={_APIKey}")
             });
             var request = new RestRequest("", Method.Get);
             RestResponse restResponse = client.Execute(request);
@@ -81,8 +77,8 @@ namespace WeatherForecaster.Rest
         {
             using var client = new RestSharp.RestClient(new RestClientOptions
             {
-                MaxTimeout = maxTimeout,
-                BaseUrl = new Uri($"{baseUri}/forecast?lat={lat}&lon={lon}&units=metric&appid={APIKey}")
+                MaxTimeout = _maxTimeout,
+                BaseUrl = new Uri($"{_weatherUrl}/forecast?lat={lat}&lon={lon}&units=metric&appid={_APIKey}")
             });
             var request = new RestRequest("", Method.Get);
             RestResponse restResponse = client.Execute(request);
@@ -92,8 +88,5 @@ namespace WeatherForecaster.Rest
 
             return JsonConvert.DeserializeObject<WeatherForecast>(restResponse.Content);
         }
-
     }
-
-    
 }
