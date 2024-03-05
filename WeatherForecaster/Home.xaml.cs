@@ -12,17 +12,27 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WeatherForecaster.ViewModels;
 
-namespace WeatherForcaster
+namespace WeatherForecaster
 {
     /// <summary>
     /// Interaction logic for Home.xaml
     /// </summary>
     public partial class Home : Page
     {
-        public Home()
+        private CitiesViewModel _cities;
+        public Home(CitiesViewModel ctv)
         {
+            _cities = ctv;
+
             InitializeComponent();
+
+            this.DataContext = new
+            {
+                cities = _cities
+            };
+
         }
     }
 }
