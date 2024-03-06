@@ -21,19 +21,30 @@ public class RestClientErrorException : Exception
 
         try
         {
-            if (string.IsNullOrEmpty(rawResponse.Content)) Console.WriteLine("Content for parsing is empty");
+            if (string.IsNullOrEmpty(rawResponse.Content))
+            {
+                Console.WriteLine("Content for parsing is empty");
+            }
 
             if (!string.IsNullOrEmpty(rawResponse.Content) && rawResponse.Content.Contains("403 Forbidden"))
+            {
                 _response = new RawErrorResponse { code = "forbidden", error = "VPN error" };
+            }
 
-            if (_response == null) _response = JsonConvert.DeserializeObject<RawErrorResponse>(rawResponse.Content);
+            if (_response == null)
+            {
+                _response = JsonConvert.DeserializeObject<RawErrorResponse>(rawResponse.Content);
+            }
         }
         catch (Exception ex)
         {
             Console.WriteLine($"Content for parsing: {rawResponse.Content} \nException: {ex.Message}");
         }
 
-        if (_response == null) _response = new RawErrorResponse { code = HttpCode.ToString(), error = "null" };
+        if (_response == null)
+        {
+            _response = new RawErrorResponse { code = HttpCode.ToString(), error = "null" };
+        }
 
         Error = _response.error;
     }
@@ -51,7 +62,10 @@ public class RestClientErrorException : Exception
             try
             {
                 var description = Application.Current.Resources[_response.code].ToString();
-                if (description != "-") return description;
+                if (description != "-")
+                {
+                    return description;
+                }
             }
             catch (Exception ex)
             {

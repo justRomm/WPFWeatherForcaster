@@ -75,9 +75,15 @@ public partial class MainWindow : Window
             .ToList();
 
         m_cities.CitiesList = filteredCities;
-        if (filteredCities.Count != 0 && !m_cities.IsComboBoxEnabled) m_cities.IsComboBoxEnabled = true;
+        if (filteredCities.Count != 0 && !m_cities.IsComboBoxEnabled)
+        {
+            m_cities.IsComboBoxEnabled = true;
+        }
 
-        if (filteredCities.Count == 0) m_cities.IsComboBoxEnabled = false;
+        if (filteredCities.Count == 0)
+        {
+            m_cities.IsComboBoxEnabled = false;
+        }
     }
 
     private void OnComboBoxLostFocus(object sender, EventArgs e)
@@ -106,11 +112,16 @@ public partial class MainWindow : Window
             {
                 if (ResizeMode == ResizeMode.CanResize ||
                     ResizeMode == ResizeMode.CanResizeWithGrip)
+                {
                     SwitchState();
+                }
             }
             else
             {
-                if (WindowState == WindowState.Maximized) restoreIfMove = true;
+                if (WindowState == WindowState.Maximized)
+                {
+                    restoreIfMove = true;
+                }
 
                 DragMove();
             }
@@ -118,23 +129,28 @@ public partial class MainWindow : Window
         header.MouseLeftButtonUp += (s, e) => { restoreIfMove = false; };
         header.MouseMove += (s, e) =>
         {
-            if (restoreIfMove)
+            if (!restoreIfMove)
             {
-                restoreIfMove = false;
-                var mouseX = e.GetPosition(this).X;
-                var width = RestoreBounds.Width;
-                var x = mouseX - width / 2;
-
-                if (x < 0)
-                    x = 0;
-                else if (x + width > SystemParameters.PrimaryScreenWidth)
-                    x = SystemParameters.PrimaryScreenWidth - width;
-
-                WindowState = WindowState.Normal;
-                Left = x;
-                Top = 0;
-                DragMove();
+                return;
             }
+            restoreIfMove = false;
+            var mouseX = e.GetPosition(this).X;
+            var width = RestoreBounds.Width;
+            var x = mouseX - width / 2;
+
+            if (x < 0)
+            {
+                x = 0;
+            }
+            else if (x + width > SystemParameters.PrimaryScreenWidth)
+            {
+                x = SystemParameters.PrimaryScreenWidth - width;
+            }
+
+            WindowState = WindowState.Normal;
+            Left = x;
+            Top = 0;
+            DragMove();
         };
     }
 
@@ -166,14 +182,19 @@ public partial class MainWindow : Window
 
     private void CitiesSearchBoxGotFocus(object sender, RoutedEventArgs e)
     {
-        if (m_cities.CitiesTextBoxText == "Enter your city") (sender as TextBox).Text = string.Empty;
+        if (m_cities.CitiesTextBoxText == "Enter your city")
+        {
+            (sender as TextBox).Text = string.Empty;
+        }
         m_cities.IsCitiesTextBlockVisible = false;
     }
 
     private void CitySearchBoxOnLostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
     {
         if (string.IsNullOrEmpty((sender as TextBox).Text) && m_cities.CitiesTextBoxText == string.Empty)
+        {
             m_cities.CitiesTextBoxText = "Enter your city";
+        }
 
         m_cities.IsCitiesTextBlockVisible = true;
     }

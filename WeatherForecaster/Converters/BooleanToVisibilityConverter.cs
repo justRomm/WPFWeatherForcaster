@@ -14,7 +14,9 @@ public class BooleanToVisibilityConverter : IValueConverter
             var inputValue = System.Convert.ToBoolean(value);
 
             if (parameter != null && parameter.ToString() == "invert")
+            {
                 return inputValue ? Visibility.Collapsed : Visibility.Visible;
+            }
 
             return inputValue ? Visibility.Visible : Visibility.Collapsed;
         }

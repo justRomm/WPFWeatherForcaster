@@ -19,9 +19,15 @@ public static class Utils
         // Popup.Child content is not part of the visual tree.
         // To prevent traversal from breaking when parent is a Popup,
         // we need to explicitly extract the content.
-        if (parent is Popup popup) parent = popup.Child;
+        if (parent is Popup popup)
+        {
+            parent = popup.Child;
+        }
 
-        if (parent == null) return false;
+        if (parent == null)
+        {
+            return false;
+        }
 
         var stringComparison = isCaseSensitive
             ? StringComparison.Ordinal

@@ -26,7 +26,10 @@ public partial class Home : Page
 
     private static int CalculateDewPoint(double humidity, double temperature)
     {
-        if (double.IsNaN(humidity) || double.IsNaN(temperature)) return 0;
+        if (double.IsNaN(humidity) || double.IsNaN(temperature))
+        {
+            return 0;
+        }
 
         var inner = Math.Log(humidity / 100) + 17.62 * temperature / (243.12 + temperature);
         var res = 243.12 * inner / (17.62 - inner);

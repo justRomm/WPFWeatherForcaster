@@ -17,7 +17,9 @@ public static class RestClient
     private static void ThrowOnErrorResponse(RestResponse response)
     {
         if (!response.IsSuccessful || response.StatusCode != HttpStatusCode.OK)
+        {
             throw new RestClientErrorException(response);
+        }
     }
 
     public static CurrentWeather GetCurrentWeather(double lat, double lon)
