@@ -13,7 +13,7 @@ namespace WeatherForecaster;
 public partial class Home : Page
 {
     private readonly CitiesViewModel m_citiesViewModel;
-    private readonly WeatherViewModel m_weatherViewModel = new();
+    private readonly CurrentWeatherViewModel m_currentWeatherViewModel = new();
 
     public Home(CitiesViewModel ctv)
     {
@@ -25,7 +25,7 @@ public partial class Home : Page
         DataContext = new
         {
             cities = m_citiesViewModel,
-            weather = m_weatherViewModel
+            weather = m_currentWeatherViewModel
         };
 
         m_citiesViewModel.SelectedCityChanged += UpdateInfo;
@@ -53,20 +53,20 @@ public partial class Home : Page
             currentWeather = RequestWeather(m_citiesViewModel.SelectedCity);
         }
 
-        m_weatherViewModel.Temperature = currentWeather.main.temp;
-        m_weatherViewModel.Description = currentWeather.weather[0].main;
-        m_weatherViewModel.Cloudiness = currentWeather.clouds.all;
-        m_weatherViewModel.Humidity = currentWeather.main.humidity;
-        m_weatherViewModel.Visibility = currentWeather.visibility;
-        m_weatherViewModel.WindSpeed = currentWeather.wind.speed;
-        m_weatherViewModel.TempFeelsLike = currentWeather.main.feels_like;
-        m_weatherViewModel.Pressure = currentWeather.main.pressure;
-        m_weatherViewModel.DewPoint = CalculateDewPoint(m_weatherViewModel.Humidity, m_weatherViewModel.Temperature);
+        m_currentWeatherViewModel.Temperature = currentWeather.main.temp;
+        m_currentWeatherViewModel.Description = currentWeather.weather[0].main;
+        m_currentWeatherViewModel.Cloudiness = currentWeather.clouds.all;
+        m_currentWeatherViewModel.Humidity = currentWeather.main.humidity;
+        m_currentWeatherViewModel.Visibility = currentWeather.visibility;
+        m_currentWeatherViewModel.WindSpeed = currentWeather.wind.speed;
+        m_currentWeatherViewModel.TempFeelsLike = currentWeather.main.feels_like;
+        m_currentWeatherViewModel.Pressure = currentWeather.main.pressure;
+        m_currentWeatherViewModel.DewPoint = CalculateDewPoint(m_currentWeatherViewModel.Humidity, m_currentWeatherViewModel.Temperature);
 
         var currentTime = DateTime.Now;
 
-        m_weatherViewModel.UpdateHour = currentTime.Hour;
-        m_weatherViewModel.UpdateMinute = currentTime.Minute;
+        m_currentWeatherViewModel.UpdateHour = currentTime.Hour;
+        m_currentWeatherViewModel.UpdateMinute = currentTime.Minute;
 
         ((MainWindow)System.Windows.Application.Current.MainWindow).UpdateLayout();
     }

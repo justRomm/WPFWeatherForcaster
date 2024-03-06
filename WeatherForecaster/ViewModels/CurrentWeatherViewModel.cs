@@ -2,40 +2,40 @@
 
 namespace WeatherForecaster.ViewModels;
 
-public class WeatherViewModel : DependencyObject
+public class CurrentWeatherViewModel : DependencyObject
 {
     private static readonly DependencyProperty DescriptionDp =
-        DependencyProperty.Register("Description", typeof(string), typeof(WeatherViewModel));
+        DependencyProperty.Register("Description", typeof(string), typeof(CurrentWeatherViewModel));
 
     private static readonly DependencyProperty TempDp =
-        DependencyProperty.Register("Temperature", typeof(double), typeof(WeatherViewModel));
+        DependencyProperty.Register("Temperature", typeof(double), typeof(CurrentWeatherViewModel));
 
     private static readonly DependencyProperty TempFeelsLikeDp =
-        DependencyProperty.Register("TempFeelsLike", typeof(double), typeof(WeatherViewModel));
+        DependencyProperty.Register("TempFeelsLike", typeof(double), typeof(CurrentWeatherViewModel));
 
     private static readonly DependencyProperty VisibilityDp =
-        DependencyProperty.Register("Visibility", typeof(int), typeof(WeatherViewModel));
+        DependencyProperty.Register("Visibility", typeof(int), typeof(CurrentWeatherViewModel));
 
     private static readonly DependencyProperty WindSpeedDP =
-        DependencyProperty.Register("WindSpeed", typeof(double), typeof(WeatherViewModel));
+        DependencyProperty.Register("WindSpeed", typeof(double), typeof(CurrentWeatherViewModel));
 
     private static readonly DependencyProperty CloudinessDP =
-        DependencyProperty.Register("Cloudiness", typeof(int), typeof(WeatherViewModel));
+        DependencyProperty.Register("Cloudiness", typeof(int), typeof(CurrentWeatherViewModel));
 
     private static readonly DependencyProperty UpdateHourDp =
-        DependencyProperty.Register("UpdateHour", typeof(int), typeof(WeatherViewModel));
+        DependencyProperty.Register("UpdateHour", typeof(int), typeof(CurrentWeatherViewModel));
 
     private static readonly DependencyProperty UpdateMinuteDp =
-        DependencyProperty.Register("UpdateMinute", typeof(int), typeof(WeatherViewModel));
+        DependencyProperty.Register("UpdateMinute", typeof(int), typeof(CurrentWeatherViewModel));
 
     private static readonly DependencyProperty PressureDP =
-        DependencyProperty.Register("Pressure", typeof(int), typeof(WeatherViewModel));
+        DependencyProperty.Register("Pressure", typeof(int), typeof(CurrentWeatherViewModel));
 
     private static readonly DependencyProperty HumidityDp =
-        DependencyProperty.Register("Humidity", typeof(int), typeof(WeatherViewModel));
+        DependencyProperty.Register("Humidity", typeof(int), typeof(CurrentWeatherViewModel));
 
     private static readonly DependencyProperty DewPointDp =
-        DependencyProperty.Register("DewPoint", typeof(int), typeof(WeatherViewModel));
+        DependencyProperty.Register("DewPoint", typeof(int), typeof(CurrentWeatherViewModel));
 
     public string Description
     {
