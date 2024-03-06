@@ -1,73 +1,57 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using WeatherForecaster.ViewModels;
 using WeatherForecaster.Rest;
+using WeatherForecaster.ViewModels;
 
-namespace WeatherForecaster
+namespace WeatherForecaster;
+
+public partial class Home : Page
 {
-    public partial class Home : Page
+    private readonly CitiesViewModel m_citiesViewModel;
+    private readonly WeatherViewModel m_weatherViewModel = new();
+
+    public Home(CitiesViewModel ctv)
     {
-        private readonly CitiesViewModel _citiesViewModel;
-        private readonly WeatherViewModel _weatherViewModel = new();
-        private static int CalculateDewPoint(double humidity, double temperature)
+        m_citiesViewModel = ctv;
+
+        InitializeComponent();
+
+        InitializeWeather();
+        DataContext = new
         {
-            if (double.IsNaN(humidity) || double.IsNaN(temperature))
-            {
-                return 0;
-            }
+            cities = m_citiesViewModel,
+            weather = m_weatherViewModel
+        };
+    }
 
-            var inner = Math.Log(humidity / 100) + 17.62 * temperature / (243.12 + temperature);
-            var res = 243.12 * inner / (17.62 - inner);
+    private static int CalculateDewPoint(double humidity, double temperature)
+    {
+        if (double.IsNaN(humidity) || double.IsNaN(temperature)) return 0;
 
-            return (int)Math.Round(res);
-        }
+        var inner = Math.Log(humidity / 100) + 17.62 * temperature / (243.12 + temperature);
+        var res = 243.12 * inner / (17.62 - inner);
 
-        public Home(CitiesViewModel ctv)
-        {
-            _citiesViewModel = ctv;
+        return (int)Math.Round(res);
+    }
 
-            InitializeComponent();
+    private void InitializeWeather()
+    {
+        var latAndLong = RestClient.GetLatAndLonFromCity(m_citiesViewModel.SelectedCity);
+        var currentWeather = RestClient.GetCurrentWeather(latAndLong[0].latitude, latAndLong[0].longitude);
 
-            InitializeWeather();
-            this.DataContext = new
-            {
-                cities = _citiesViewModel,
-                weather = _weatherViewModel
-            };
+        m_weatherViewModel.Temperature = currentWeather.main.temp;
+        m_weatherViewModel.Description = currentWeather.weather[0].main;
+        m_weatherViewModel.Cloudiness = currentWeather.clouds.all;
+        m_weatherViewModel.Humidity = currentWeather.main.humidity;
+        m_weatherViewModel.Visibility = currentWeather.visibility;
+        m_weatherViewModel.WindSpeed = currentWeather.wind.speed;
+        m_weatherViewModel.TempFeelsLike = currentWeather.main.feels_like;
+        m_weatherViewModel.Pressure = currentWeather.main.pressure;
+        m_weatherViewModel.DewPoint = CalculateDewPoint(m_weatherViewModel.Humidity, m_weatherViewModel.Temperature);
 
-        }
-        
-        private void InitializeWeather()
-        {
-            var latAndLong = RestClient.GetLatAndLonFromCity(_citiesViewModel.SelectedCity);
-            var currentWeather = RestClient.GetCurrentWeather(latAndLong[0].latitude, latAndLong[0].longitude);
+        var currentTime = DateTime.Now;
 
-            _weatherViewModel.Temperature = currentWeather.main.temp;
-            _weatherViewModel.Description = currentWeather.weather[0].main;
-            _weatherViewModel.Cloudiness = currentWeather.clouds.all;
-            _weatherViewModel.Humidity = currentWeather.main.humidity;
-            _weatherViewModel.Visibility = currentWeather.visibility;
-            _weatherViewModel.WindSpeed = currentWeather.wind.speed;
-            _weatherViewModel.TempFeelsLike = currentWeather.main.feels_like;
-            _weatherViewModel.Pressure = currentWeather.main.pressure;
-            _weatherViewModel.DewPoint = CalculateDewPoint(_weatherViewModel.Humidity, _weatherViewModel.Temperature);
-
-            var currentTime = DateTime.Now;
-
-            _weatherViewModel.UpdateHour = currentTime.Hour;
-            _weatherViewModel.UpdateMinute = currentTime.Minute;
-        }
+        m_weatherViewModel.UpdateHour = currentTime.Hour;
+        m_weatherViewModel.UpdateMinute = currentTime.Minute;
     }
 }

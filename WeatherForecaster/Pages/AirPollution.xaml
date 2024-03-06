@@ -1,18 +1,17 @@
 ﻿<Page x:Class="WeatherForecaster.Pages.AirPollution"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:WeatherForecaster"
-      mc:Ignorable="d" 
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      mc:Ignorable="d"
       d:DesignHeight="600" d:DesignWidth="950"
       Title="Home" Background="{x:Null}">
 
     <Page.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="../Styles/HoverableButton.xaml"/>
-                <ResourceDictionary Source="../Styles/MainWindowStyle.xaml"/>
+                <ResourceDictionary Source="../Styles/HoverableButton.xaml" />
+                <ResourceDictionary Source="../Styles/MainWindowStyle.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Page.Resources>
@@ -20,28 +19,36 @@
 
     <Grid Background="#008dfd">
         <Grid.RowDefinitions>
-            <RowDefinition Height="50"/>
-            <RowDefinition Height="100"/>
-            <RowDefinition Height="50"/>
-            <RowDefinition Height="30"/>
-            <RowDefinition Height="35"/>
-            <RowDefinition Height="35"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="50"/>
-            <RowDefinition Height="150"/>
+            <RowDefinition Height="50" />
+            <RowDefinition Height="100" />
+            <RowDefinition Height="50" />
+            <RowDefinition Height="30" />
+            <RowDefinition Height="35" />
+            <RowDefinition Height="35" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="50" />
+            <RowDefinition Height="150" />
         </Grid.RowDefinitions>
 
-        <TextBlock Grid.Row="0" Text="CityName" FontFamily="{StaticResource Poppins-Medium}" FontSize="28" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-        <TextBlock Grid.Row="1" Text="Temperature" FontFamily="{StaticResource Poppins-Medium}" FontSize="40" HorizontalAlignment="Center"  VerticalAlignment="Center"/>
-        <TextBlock Grid.Row="2" Text="General weather info" FontFamily="{StaticResource Poppins-Medium}" FontSize="18" HorizontalAlignment="Center"  VerticalAlignment="Center"/>
-        <TextBlock Grid.Row="3" Text="Some data" FontFamily="{StaticResource Poppins-Medium}" FontSize="18" HorizontalAlignment="Center"  VerticalAlignment="Center"/>
-        <TextBlock Grid.Row="4" Text="Some data" FontFamily="{StaticResource Poppins-Medium}" FontSize="18" HorizontalAlignment="Center"  VerticalAlignment="Center"/>
-        <TextBlock Grid.Row="5" Text="Some data" FontFamily="{StaticResource Poppins-Medium}" FontSize="18" HorizontalAlignment="Center"  VerticalAlignment="Center"/>
-        <TextBlock Grid.Row="7" Text="Forecast" FontFamily="{StaticResource Poppins-Medium}" FontSize="40" HorizontalAlignment="Left"  VerticalAlignment="Bottom" Margin="50 0 0 0"/>
+        <TextBlock Grid.Row="0" Text="CityName" FontFamily="{StaticResource Poppins-Medium}" FontSize="28"
+                   HorizontalAlignment="Center" VerticalAlignment="Center" />
+        <TextBlock Grid.Row="1" Text="Temperature" FontFamily="{StaticResource Poppins-Medium}" FontSize="40"
+                   HorizontalAlignment="Center" VerticalAlignment="Center" />
+        <TextBlock Grid.Row="2" Text="General weather info" FontFamily="{StaticResource Poppins-Medium}" FontSize="18"
+                   HorizontalAlignment="Center" VerticalAlignment="Center" />
+        <TextBlock Grid.Row="3" Text="Some data" FontFamily="{StaticResource Poppins-Medium}" FontSize="18"
+                   HorizontalAlignment="Center" VerticalAlignment="Center" />
+        <TextBlock Grid.Row="4" Text="Some data" FontFamily="{StaticResource Poppins-Medium}" FontSize="18"
+                   HorizontalAlignment="Center" VerticalAlignment="Center" />
+        <TextBlock Grid.Row="5" Text="Some data" FontFamily="{StaticResource Poppins-Medium}" FontSize="18"
+                   HorizontalAlignment="Center" VerticalAlignment="Center" />
+        <TextBlock Grid.Row="7" Text="Forecast" FontFamily="{StaticResource Poppins-Medium}" FontSize="40"
+                   HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="50 0 0 0" />
 
         <StackPanel Grid.Row="8" Orientation="Horizontal">
 
-            <Button Width="25" Height="25" HorizontalAlignment="Left" Margin="25 0 15 0" Background="Transparent" BorderBrush="Transparent" BorderThickness="0" Style="{StaticResource HoverableButton}">
+            <Button Width="25" Height="25" HorizontalAlignment="Left" Margin="25 0 15 0" Background="Transparent"
+                    BorderBrush="Transparent" BorderThickness="0" Style="{StaticResource HoverableButton}">
                 <Button.Template>
                     <ControlTemplate>
                         <Image Width="7" Height="12">
@@ -49,7 +56,8 @@
                                 <DrawingImage>
                                     <DrawingImage.Drawing>
                                         <DrawingGroup ClipGeometry="M0,0 V12 H7 V0 H0 Z">
-                                            <GeometryDrawing Brush="#FF686868" Geometry="F1 M7,12z M0,0z M6.70998,0.70998C6.31998,0.31998,5.68998,0.31998,5.29998,0.70998L0.70998,5.29998C0.31998,5.68998,0.31998,6.31998,0.70998,6.70998L5.29998,11.3C5.68998,11.69 6.31998,11.69 6.70998,11.3 7.09998,10.91 7.09998,10.28 6.70998,9.88998L2.82998,5.99998 6.70998,2.11998C7.09998,1.72998,7.08998,1.08998,6.70998,0.70998z" />
+                                            <GeometryDrawing Brush="#FF686868"
+                                                             Geometry="F1 M7,12z M0,0z M6.70998,0.70998C6.31998,0.31998,5.68998,0.31998,5.29998,0.70998L0.70998,5.29998C0.31998,5.68998,0.31998,6.31998,0.70998,6.70998L5.29998,11.3C5.68998,11.69 6.31998,11.69 6.70998,11.3 7.09998,10.91 7.09998,10.28 6.70998,9.88998L2.82998,5.99998 6.70998,2.11998C7.09998,1.72998,7.08998,1.08998,6.70998,0.70998z" />
                                         </DrawingGroup>
                                     </DrawingImage.Drawing>
                                 </DrawingImage>
@@ -59,9 +67,12 @@
                 </Button.Template>
             </Button>
 
-            <ScrollViewer Height="140" Width="820" VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Disabled"></ScrollViewer>
+            <ScrollViewer Height="140" Width="820" VerticalScrollBarVisibility="Disabled"
+                          HorizontalScrollBarVisibility="Disabled" />
 
-            <Button Content="forward" Width="25" Height="25" HorizontalAlignment="Right" Margin="15 0 25 0" Background="Transparent" BorderBrush="Transparent" BorderThickness="0" Style="{StaticResource HoverableButton}">
+            <Button Content="forward" Width="25" Height="25" HorizontalAlignment="Right" Margin="15 0 25 0"
+                    Background="Transparent" BorderBrush="Transparent" BorderThickness="0"
+                    Style="{StaticResource HoverableButton}">
                 <Button.Template>
                     <ControlTemplate>
                         <Image Width="7" Height="12">
@@ -69,7 +80,8 @@
                                 <DrawingImage>
                                     <DrawingImage.Drawing>
                                         <DrawingGroup ClipGeometry="M0,0 V12 H7 V0 H0 Z">
-                                            <GeometryDrawing Brush="#FF686868" Geometry="F1 M7,12z M0,0z M0.70998,0.70998C1.09998,1.09998,1.72998,1.09998,2.11998,0.70998L6.70998,5.29998C7.09998,5.68998,7.09998,6.31998,6.70998,6.70998L2.11998,11.3C1.72998,11.69,1.09998,11.69,0.70998,11.3 0.31998,10.91,0.31998,10.28,0.70998,9.88998L4.58998,5.99998,0.70998,2.11998C0.31998,1.72998,0.32998,1.08998,0.70998,0.70998z" />
+                                            <GeometryDrawing Brush="#FF686868"
+                                                             Geometry="F1 M7,12z M0,0z M0.70998,0.70998C1.09998,1.09998,1.72998,1.09998,2.11998,0.70998L6.70998,5.29998C7.09998,5.68998,7.09998,6.31998,6.70998,6.70998L2.11998,11.3C1.72998,11.69,1.09998,11.69,0.70998,11.3 0.31998,10.91,0.31998,10.28,0.70998,9.88998L4.58998,5.99998,0.70998,2.11998C0.31998,1.72998,0.32998,1.08998,0.70998,0.70998z" />
                                         </DrawingGroup>
                                     </DrawingImage.Drawing>
                                 </DrawingImage>

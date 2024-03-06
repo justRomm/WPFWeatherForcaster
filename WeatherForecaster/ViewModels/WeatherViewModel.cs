@@ -1,5 +1,4 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 
 namespace WeatherForecaster.ViewModels;
 
@@ -103,6 +102,4 @@ public class WeatherViewModel : DependencyObject
         get => (int)GetValue(PressureDP);
         set => SetValue(DewPointDp, value);
     }
-
-    
 }

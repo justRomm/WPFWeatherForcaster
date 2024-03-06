@@ -4,12 +4,13 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:converters="clr-namespace:WeatherForecaster.Converters"
-        mc:Ignorable="d" WindowStyle="None" AllowsTransparency="True" Background="Transparent"  ResizeMode="NoResize" SizeToContent="WidthAndHeight" WindowStartupLocation="CenterScreen">
+        mc:Ignorable="d" WindowStyle="None" AllowsTransparency="True" Background="Transparent" ResizeMode="NoResize"
+        SizeToContent="WidthAndHeight" WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Styles/HoverableButton.xaml"/>
-                <ResourceDictionary Source="Styles/MainWindowStyle.xaml"/>
+                <ResourceDictionary Source="Styles/HoverableButton.xaml" />
+                <ResourceDictionary Source="Styles/MainWindowStyle.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
             <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
@@ -19,73 +20,95 @@
 
     <Window.Template>
         <ControlTemplate TargetType="Window">
-            <Border BorderBrush="Transparent" BorderThickness="5" Padding="5" CornerRadius="15" Name="MainBorder" Background="#0063b1" >
+            <Border BorderBrush="Transparent" BorderThickness="5" Padding="5" CornerRadius="15" Name="MainBorder"
+                    Background="#0063b1">
                 <Border.Effect>
-                    <DropShadowEffect BlurRadius="10" Direction="-90" RenderingBias="Quality" ShadowDepth="2" Color="Transparent" />
+                    <DropShadowEffect BlurRadius="10" Direction="-90" RenderingBias="Quality" ShadowDepth="2"
+                                      Color="Transparent" />
                 </Border.Effect>
                 <Grid Margin="0">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="30"/>
-                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
-                    <Grid x:Name="sp" Grid.Row="0" Loaded="header_Loaded" Background="Transparent" >
+                    <Grid x:Name="sp" Grid.Row="0" Loaded="Header_Loaded" Background="Transparent">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="270"/>
-                            <ColumnDefinition Width="20"/>
-                            <ColumnDefinition Width="85"/>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="270" />
+                            <ColumnDefinition Width="20" />
+                            <ColumnDefinition Width="85" />
                         </Grid.ColumnDefinitions>
-                        <TextBlock Grid.Column="0"  x:Name="header" Background="Transparent" Foreground="White" FontFamily="{StaticResource Poppins-Medium}"
-                                    Text="Weather Forecaster" Margin="15 5 0 5" VerticalAlignment="Center" />
+                        <TextBlock Grid.Column="0" x:Name="header" Background="Transparent" Foreground="White"
+                                   FontFamily="{StaticResource Poppins-Medium}"
+                                   Text="Weather Forecaster" Margin="15 5 0 5" VerticalAlignment="Center" />
                         <Grid Grid.Column="1">
 
-                            <TextBox  GotFocus="CitiesSearchBoxGotFocus" Text="{Binding Path=cities.CitiesTextBoxText}"
-                                      LostKeyboardFocus="CitySearchBoxOnLostKeyboardFocus" 
-                                      TextChanged="CitySearchBoxTextChanged" 
-                                      x:Name="CitiesSearchBox" 
-                                      LostFocus="OnComboBoxLostFocus"
-                                      Panel.ZIndex="1" 
-                                      Foreground="Black" 
-                                      Background="White"
-                                      FontFamily="{StaticResource Poppins-Medium}" 
-                                      VerticalContentAlignment="Center"
-                                      Focusable="{Binding Path=cities.IsCitiesTextBlockVisible, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay, ConverterParameter=invert}" />
+                            <TextBox GotFocus="CitiesSearchBoxGotFocus" Text="{Binding Path=cities.CitiesTextBoxText}"
+                                     LostKeyboardFocus="CitySearchBoxOnLostKeyboardFocus"
+                                     TextChanged="CitySearchBoxTextChanged"
+                                     x:Name="CitiesSearchBox"
+                                     LostFocus="OnComboBoxLostFocus"
+                                     Panel.ZIndex="1"
+                                     Foreground="Black"
+                                     Background="White"
+                                     FontFamily="{StaticResource Poppins-Medium}"
+                                     VerticalContentAlignment="Center"
+                                     Focusable="{Binding Path=cities.IsCitiesTextBlockVisible, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay, ConverterParameter=invert}" />
 
-                            <ComboBox x:Name="CitiesComboBox" IsDropDownOpen="{Binding Path=cities.IsComboBoxEnabled}" ItemsSource="{Binding Path=cities.CitiesList}" MaxDropDownHeight="100" 
-                                      IsEnabled="False" Foreground="Black" SelectionChanged="CitiesComboBoxSelectionChanged" FontFamily="{StaticResource Poppins-Medium}" 
-                                      Background="Transparent" BorderBrush="Transparent" VerticalAlignment="Center" MinHeight="30" VerticalContentAlignment="Center"/>
+                            <ComboBox x:Name="CitiesComboBox" IsDropDownOpen="{Binding Path=cities.IsComboBoxEnabled}"
+                                      ItemsSource="{Binding Path=cities.CitiesList}" MaxDropDownHeight="100"
+                                      IsEnabled="False" Foreground="Black"
+                                      SelectionChanged="CitiesComboBoxSelectionChanged"
+                                      FontFamily="{StaticResource Poppins-Medium}"
+                                      Background="Transparent" BorderBrush="Transparent" VerticalAlignment="Center"
+                                      MinHeight="30" VerticalContentAlignment="Center" />
                         </Grid>
-                        <Button Style="{StaticResource HoverableButton}" Background="Transparent" BorderBrush="Transparent" 
-                                Grid.Column="3" HorizontalAlignment="Left"  Content="-" Height="15"   Name="button1" Width="40" Click="button1_Click" 
-                                VerticalAlignment="Center"/>
+                        <Button Style="{StaticResource HoverableButton}" Background="Transparent"
+                                BorderBrush="Transparent"
+                                Grid.Column="3" HorizontalAlignment="Left" Content="-" Height="15" Name="button1"
+                                Width="40" Click="Button1_Click"
+                                VerticalAlignment="Center" />
 
-                        <Button Style="{StaticResource HoverableButton}" Background="Transparent" BorderBrush="Transparent" 
-                                Grid.Column="3" HorizontalAlignment="Right" Content="X" Height="15"  Name="button3" Width="40" Click="button3_Click" 
-                                VerticalAlignment="Center"/>
+                        <Button Style="{StaticResource HoverableButton}" Background="Transparent"
+                                BorderBrush="Transparent"
+                                Grid.Column="3" HorizontalAlignment="Right" Content="X" Height="15" Name="button3"
+                                Width="40" Click="button3_Click"
+                                VerticalAlignment="Center" />
                     </Grid>
-                    <ContentPresenter Grid.Row="1" Cursor="Arrow"/>
+                    <ContentPresenter Grid.Row="1" Cursor="Arrow" />
                 </Grid>
             </Border>
         </ControlTemplate>
     </Window.Template>
 
 
-    <StackPanel x:Name="MainGrid" Background="Transparent" Width="1000" Height="600" Orientation="Horizontal" Margin="5 5 5 5">
-        <Grid x:Name="LeftPanel"  Width="50" HorizontalAlignment="Left" Height="{Binding ElementName=MainGrid, Path=Height}">
+    <StackPanel x:Name="MainGrid" Background="Transparent" Width="1000" Height="600" Orientation="Horizontal"
+                Margin="5 5 5 5">
+        <Grid x:Name="LeftPanel" Width="50" HorizontalAlignment="Left"
+              Height="{Binding ElementName=MainGrid, Path=Height}">
             <Grid.RowDefinitions>
-                <RowDefinition Height="60"/>
-                <RowDefinition Height="60"/>
-                <RowDefinition Height="60"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="60"/>
+                <RowDefinition Height="60" />
+                <RowDefinition Height="60" />
+                <RowDefinition Height="60" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="60" />
             </Grid.RowDefinitions>
 
-            <Button BorderBrush="#008dfd" BorderThickness="2" Background="#0078d7" Foreground="White" Height="50" Content="Home" VerticalAlignment="Bottom" Grid.Row="0" Margin="0 5 0 5" Style="{StaticResource HoverableButton}"/>
-            <Button BorderBrush="#008dfd" BorderThickness="2" Background="#0078d7" Foreground="White" Height="50" Content="Pol" VerticalAlignment="Bottom" Grid.Row="1" Margin="0 5 0 5" Style="{StaticResource HoverableButton}"/>
-            <Button BorderBrush="#008dfd" BorderThickness="2" Background="#0078d7" Foreground="White" Height="50" Content="Map" VerticalAlignment="Bottom" Grid.Row="2" Margin="0 5 0 5" Style="{StaticResource HoverableButton}"/>
-            <Button BorderBrush="#008dfd" BorderThickness="2" Background="#0078d7" Foreground="White" Height="50" Content="Set" VerticalAlignment="Bottom" Grid.Row="4" Margin="0 5 0 5" Style="{StaticResource HoverableButton}"/>
+            <Button BorderBrush="#008dfd" BorderThickness="2" Background="#0078d7" Foreground="White" Height="50"
+                    Content="Home" VerticalAlignment="Bottom" Grid.Row="0" Margin="0 5 0 5"
+                    Style="{StaticResource HoverableButton}" />
+            <Button BorderBrush="#008dfd" BorderThickness="2" Background="#0078d7" Foreground="White" Height="50"
+                    Content="Pol" VerticalAlignment="Bottom" Grid.Row="1" Margin="0 5 0 5"
+                    Style="{StaticResource HoverableButton}" />
+            <Button BorderBrush="#008dfd" BorderThickness="2" Background="#0078d7" Foreground="White" Height="50"
+                    Content="Map" VerticalAlignment="Bottom" Grid.Row="2" Margin="0 5 0 5"
+                    Style="{StaticResource HoverableButton}" />
+            <Button BorderBrush="#008dfd" BorderThickness="2" Background="#0078d7" Foreground="White" Height="50"
+                    Content="Set" VerticalAlignment="Bottom" Grid.Row="4" Margin="0 5 0 5"
+                    Style="{StaticResource HoverableButton}" />
         </Grid>
-        <Frame x:Name="NavigationFrame" NavigationUIVisibility="Hidden" Focusable="False" FocusVisualStyle="{x:Null}" Panel.ZIndex="1" Margin="5 0 5 0" /> <!--Navigating="NavigationFrame_Navigating"-->
+        <Frame x:Name="NavigationFrame" NavigationUIVisibility="Hidden" Focusable="False" FocusVisualStyle="{x:Null}"
+               Panel.ZIndex="1" Margin="5 0 5 0" /> <!--Navigating="NavigationFrame_Navigating"-->
 
     </StackPanel>
 </Window>
