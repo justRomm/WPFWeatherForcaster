@@ -17,20 +17,30 @@ using WeatherForecaster.Rest;
 
 namespace WeatherForecaster
 {
-    /// <summary>
-    /// Interaction logic for Home.xaml
-    /// </summary>
     public partial class Home : Page
     {
-        private CitiesViewModel _citiesViewModel;
-        private WeatherViewModel _weatherViewModel = new();
+        private readonly CitiesViewModel _citiesViewModel;
+        private readonly WeatherViewModel _weatherViewModel = new();
+        private static int CalculateDewPoint(double humidity, double temperature)
+        {
+            if (double.IsNaN(humidity) || double.IsNaN(temperature))
+            {
+                return 0;
+            }
+
+            var inner = Math.Log(humidity / 100) + 17.62 * temperature / (243.12 + temperature);
+            var res = 243.12 * inner / (17.62 - inner);
+
+            return (int)Math.Round(res);
+        }
+
         public Home(CitiesViewModel ctv)
         {
             _citiesViewModel = ctv;
 
             InitializeComponent();
 
-            InitializeTemp();
+            InitializeWeather();
             this.DataContext = new
             {
                 cities = _citiesViewModel,
@@ -38,14 +48,13 @@ namespace WeatherForecaster
             };
 
         }
-
-        private void InitializeTemp()
+        
+        private void InitializeWeather()
         {
-
             var latAndLong = RestClient.GetLatAndLonFromCity(_citiesViewModel.SelectedCity);
             var currentWeather = RestClient.GetCurrentWeather(latAndLong[0].latitude, latAndLong[0].longitude);
 
-            _weatherViewModel.Temp = currentWeather.main.temp;
+            _weatherViewModel.Temperature = currentWeather.main.temp;
             _weatherViewModel.Description = currentWeather.weather[0].main;
             _weatherViewModel.Cloudiness = currentWeather.clouds.all;
             _weatherViewModel.Humidity = currentWeather.main.humidity;
@@ -53,18 +62,12 @@ namespace WeatherForecaster
             _weatherViewModel.WindSpeed = currentWeather.wind.speed;
             _weatherViewModel.TempFeelsLike = currentWeather.main.feels_like;
             _weatherViewModel.Pressure = currentWeather.main.pressure;
+            _weatherViewModel.DewPoint = CalculateDewPoint(_weatherViewModel.Humidity, _weatherViewModel.Temperature);
 
             var currentTime = DateTime.Now;
 
             _weatherViewModel.UpdateHour = currentTime.Hour;
             _weatherViewModel.UpdateMinute = currentTime.Minute;
-
-
-
         }
-
-        
     }
-
-
 }
