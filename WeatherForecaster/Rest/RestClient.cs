@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net;
+using System.Threading.Tasks;
 using Newtonsoft.Json;
 using RestSharp;
 using WeatherForecaster.Rest.JsonClasses;
@@ -17,9 +18,7 @@ public static class RestClient
     private static void ThrowOnErrorResponse(RestResponse response)
     {
         if (!response.IsSuccessful || response.StatusCode != HttpStatusCode.OK)
-        {
             throw new RestClientErrorException(response);
-        }
     }
 
     public static CurrentWeather GetCurrentWeather(double lat, double lon)
@@ -31,6 +30,21 @@ public static class RestClient
         });
         var request = new RestRequest("");
         var restResponse = client.Execute(request);
+
+        ThrowOnErrorResponse(restResponse);
+
+        return JsonConvert.DeserializeObject<CurrentWeather>(restResponse.Content);
+    }
+
+    public static async Task<CurrentWeather> GetCurrentWeatherAsync(double lat, double lon)
+    {
+        using var client = new RestSharp.RestClient(new RestClientOptions
+        {
+            MaxTimeout = _maxTimeout,
+            BaseUrl = new Uri($"{_weatherUrl}/weather?lat={lat}&lon={lon}&units=metric&appid={_APIKey}")
+        });
+        var request = new RestRequest("");
+        var restResponse = await client.ExecuteAsync(request);
 
         ThrowOnErrorResponse(restResponse);
 
@@ -51,6 +65,22 @@ public static class RestClient
 
         return JsonConvert.DeserializeObject<List<Location>>(restResponse.Content);
     }
+
+    public static async Task<List<Location>> GetLatAndLonFromCityAsync(string city)
+    {
+        using var client = new RestSharp.RestClient(new RestClientOptions
+        {
+            MaxTimeout = _maxTimeout,
+            BaseUrl = new Uri($"{_geoUrl}/direct?q={city}&limit=1&appid={_APIKey}")
+        });
+        var request = new RestRequest("");
+        var restResponse = await client.ExecuteAsync(request);
+
+        ThrowOnErrorResponse(restResponse);
+
+        return JsonConvert.DeserializeObject<List<Location>>(restResponse.Content);
+    }
+
 
 
     public static AirPollution GetAirPollution(double lat, double lon)

@@ -39,7 +39,6 @@ public partial class MainWindow : Window
 
         m_cities.CitiesList = cities;
 
-
         DataContext = new
         {
             cities = m_cities
@@ -173,11 +172,21 @@ public partial class MainWindow : Window
 
     private void CitiesComboBoxSelectionChanged(object sender, RoutedEventArgs e)
     {
-        if ((e.OriginalSource as ComboBox)?.SelectedItem is not string selectedItem) return;
+        var send = (e.OriginalSource as ComboBox);
 
-        (e.OriginalSource as ComboBox).SelectedItem = null;
+        if (send?.SelectedItem is not string selectedItem)
+        {
+            return;
+        }
+
+        send.SelectedItem = null;
+
+        send.IsDropDownOpen = false;
 
         m_cities.CitiesTextBoxText = selectedItem;
+
+
+        m_cities.SelectedCity = selectedItem;
     }
 
     private void CitiesSearchBoxGotFocus(object sender, RoutedEventArgs e)

@@ -20,7 +20,55 @@
     </Page.Resources>
 
 
-    <Grid Background="#008dfd">
+    <Grid>
+        <Border x:Name="LoadingMessage" CornerRadius="15" d:Visibility="Collapsed" Visibility="Collapsed"
+        Width="950" Height="600"
+        Background="#5bb5fd" Panel.ZIndex="1">
+
+            <StackPanel VerticalAlignment="Center">
+
+                <Image x:Name="WaitForExit"
+                       HorizontalAlignment="Center"
+                       Height="50" Width="43"  
+                       RenderTransformOrigin="0.5 0.5">
+                    <Image.RenderTransform>
+                        <RotateTransform Angle="0"/>
+                    </Image.RenderTransform>
+                    <Image.Source>
+                        <DrawingImage>
+                            <DrawingImage.Drawing>
+                                <DrawingGroup ClipGeometry="M0,0 V14 H12 V0 H0 Z">
+                                    <GeometryDrawing Brush="White" Geometry="F1 M12,14z M0,0z M5.99996,3.00004L5.99996,4.19338C5.99996,4.49338,6.35996,4.64004,6.56663,4.42671L8.42663,2.56671C8.55996,2.43338,8.55996,2.22671,8.42663,2.09338L6.56663,0.233375C6.35996,0.0267085,5.99996,0.173375,5.99996,0.473375L5.99996,1.66671C3.05329,1.66671 0.666626,4.05338 0.666626,7.00004 0.666626,7.69338 0.799959,8.36004 1.04663,8.96671 1.22663,9.41338 1.79996,9.53338 2.13996,9.19338 2.31996,9.01338 2.39329,8.74004 2.29329,8.50004 2.09996,8.04004 1.99996,7.52671 1.99996,7.00004 1.99996,4.79338 3.79329,3.00004 5.99996,3.00004z M9.85996,4.80671C9.67996,4.98671 9.60663,5.26671 9.70662,5.50004 9.89329,5.96671 9.99996,6.47338 9.99996,7.00004 9.99996,9.20671 8.20663,11 5.99996,11L5.99996,9.80671C5.99996,9.50671,5.63996,9.36004,5.43329,9.57338L3.57329,11.4334C3.43996,11.5667,3.43996,11.7734,3.57329,11.9067L5.43329,13.7667C5.63996,13.9734,5.99996,13.8267,5.99996,13.5334L5.99996,12.3334C8.94663,12.3334 11.3333,9.94671 11.3333,7.00004 11.3333,6.30671 11.2,5.64004 10.9533,5.03338 10.7733,4.58671 10.2,4.46671 9.85996,4.80671z" />
+                                </DrawingGroup>
+                            </DrawingImage.Drawing>
+                        </DrawingImage>
+                    </Image.Source>
+
+                    <Image.Triggers>
+                        <EventTrigger RoutedEvent="Loaded">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <DoubleAnimation Storyboard.TargetName="WaitForExit" Storyboard.TargetProperty="(UIElement.RenderTransform).(RotateTransform.Angle)" From="0.0" To="360" Duration="0:0:1.5" RepeatBehavior="Forever"/>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                    </Image.Triggers>
+                </Image>
+            </StackPanel>
+
+            <VisualStateManager.VisualStateGroups>
+                <VisualStateGroup x:Name="CommonStates">
+                    <VisualState x:Name="Normal" />
+                    <VisualState x:Name="Disabled" />
+                    <VisualState x:Name="Pressed" />
+                    <VisualState x:Name="Visible">
+
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateManager.VisualStateGroups>
+        </Border>
+
+        <Grid Background="#0063b1">
         <Grid.RowDefinitions>
             <RowDefinition Height="70" />
             <RowDefinition Height="100" />
@@ -32,6 +80,9 @@
             <RowDefinition Height="50" />
             <RowDefinition Height="150" />
         </Grid.RowDefinitions>
+
+
+        
 
         <TextBlock Grid.Row="0" Text="{Binding Path=cities.SelectedCity}" FontFamily="{StaticResource Poppins-Bold}"
                    FontSize="36" HorizontalAlignment="Center" VerticalAlignment="Bottom" Foreground="White"
@@ -177,5 +228,6 @@
                 </Button.Template>
             </Button>
         </StackPanel>
+    </Grid>
     </Grid>
 </Page>

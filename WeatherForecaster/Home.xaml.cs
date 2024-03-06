@@ -1,6 +1,11 @@
 ﻿using System;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
+using ABI.Windows.Devices.Sensors;
 using WeatherForecaster.Rest;
+using WeatherForecaster.Rest.JsonClasses;
 using WeatherForecaster.ViewModels;
 
 namespace WeatherForecaster;
@@ -22,6 +27,8 @@ public partial class Home : Page
             cities = m_citiesViewModel,
             weather = m_weatherViewModel
         };
+
+        m_citiesViewModel.SelectedCityChanged += UpdateInfo;
     }
 
     private static int CalculateDewPoint(double humidity, double temperature)
@@ -37,10 +44,14 @@ public partial class Home : Page
         return (int)Math.Round(res);
     }
 
-    private void InitializeWeather()
+    private void InitializeWeather(CurrentWeather givenWeather = null)
     {
-        var latAndLong = RestClient.GetLatAndLonFromCity(m_citiesViewModel.SelectedCity);
-        var currentWeather = RestClient.GetCurrentWeather(latAndLong[0].latitude, latAndLong[0].longitude);
+        var currentWeather = givenWeather;
+
+        if (currentWeather == null)
+        {
+            currentWeather = RequestWeather(m_citiesViewModel.SelectedCity);
+        }
 
         m_weatherViewModel.Temperature = currentWeather.main.temp;
         m_weatherViewModel.Description = currentWeather.weather[0].main;
@@ -56,5 +67,41 @@ public partial class Home : Page
 
         m_weatherViewModel.UpdateHour = currentTime.Hour;
         m_weatherViewModel.UpdateMinute = currentTime.Minute;
+
+        ((MainWindow)System.Windows.Application.Current.MainWindow).UpdateLayout();
+    }
+
+    private CurrentWeather RequestWeather(string city)
+    {
+        var latAndLong = RestClient.GetLatAndLonFromCity(city);
+        return RestClient.GetCurrentWeather(latAndLong[0].latitude, latAndLong[0].longitude);
+    }
+
+    private void StartAnimation()
+    {
+        LoadingMessage.Visibility = Visibility.Visible;
+        System.Diagnostics.Debug.WriteLine("Changed");
+    }
+
+    private void StopAnimation()
+    {
+        LoadingMessage.Visibility = Visibility.Collapsed;
+        System.Diagnostics.Debug.WriteLine("Changed");
+    }
+
+    private void UpdateInfo()
+    {
+        Dispatcher.Invoke(StartAnimation);
+        var city = m_citiesViewModel.SelectedCity;
+        Task.Run(() =>
+        {
+            var data = RequestWeather(city);
+
+            Dispatcher.Invoke(() =>
+            {
+                InitializeWeather(data);
+                StopAnimation();
+            });
+        });
     }
 }

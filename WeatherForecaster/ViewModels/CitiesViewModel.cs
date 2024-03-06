@@ -1,10 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Windows;
 
 namespace WeatherForecaster.ViewModels;
 
 public class CitiesViewModel : DependencyObject
 {
+    public event Action SelectedCityChanged;
+
     private static readonly DependencyProperty CitiesListDp =
         DependencyProperty.Register("CitiesList", typeof(List<string>), typeof(CitiesViewModel));
 
@@ -48,6 +51,10 @@ public class CitiesViewModel : DependencyObject
     public string SelectedCity
     {
         get => GetValue(SelectedCityDp) as string;
-        set => SetValue(SelectedCityDp, value);
+        set
+        {
+            SetValue(SelectedCityDp, value);
+            SelectedCityChanged?.Invoke();
+        }
     }
 }
