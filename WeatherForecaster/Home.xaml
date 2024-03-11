@@ -13,6 +13,7 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Styles/HoverableButton.xaml" />
                 <ResourceDictionary Source="Styles/MainWindowStyle.xaml" />
+                <ResourceDictionary Source="Styles/ForecastButton.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
             <converters:DoubleToStringConverter x:Key="DoubleToCelsiusStringConverter" />
@@ -204,8 +205,7 @@
                 </Button.Template>
             </Button>
 
-            <ScrollViewer Height="140" Width="820" VerticalScrollBarVisibility="Disabled"
-                          HorizontalScrollBarVisibility="Disabled" />
+            <WrapPanel Height="140" Width="820" x:Name="ForecastPanel" />
 
             <Button Content="forward" Width="25" Height="25" HorizontalAlignment="Right" Margin="15 0 25 0"
                     Background="Transparent"

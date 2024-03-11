@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Net;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
@@ -65,40 +66,7 @@ public static class RestClient
 
         return JsonConvert.DeserializeObject<List<Location>>(restResponse.Content);
     }
-
-    public static async Task<List<Location>> GetLatAndLonFromCityAsync(string city)
-    {
-        using var client = new RestSharp.RestClient(new RestClientOptions
-        {
-            MaxTimeout = _maxTimeout,
-            BaseUrl = new Uri($"{_geoUrl}/direct?q={city}&limit=1&appid={_APIKey}")
-        });
-        var request = new RestRequest("");
-        var restResponse = await client.ExecuteAsync(request);
-
-        ThrowOnErrorResponse(restResponse);
-
-        return JsonConvert.DeserializeObject<List<Location>>(restResponse.Content);
-    }
-
-
-
-    public static AirPollution GetAirPollution(double lat, double lon)
-    {
-        using var client = new RestSharp.RestClient(new RestClientOptions
-        {
-            MaxTimeout = _maxTimeout,
-            BaseUrl = new Uri($"{_weatherUrl}/air_pollution?lat={lat}&lon={lon}&units=metric&appid={_APIKey}")
-        });
-        var request = new RestRequest("");
-        var restResponse = client.Execute(request);
-
-
-        ThrowOnErrorResponse(restResponse);
-
-        return JsonConvert.DeserializeObject<AirPollution>(restResponse.Content);
-    }
-
+    
     public static WeatherForecast GetFiveDayForecast(double lat, double lon)
     {
         using var client = new RestSharp.RestClient(new RestClientOptions
@@ -106,6 +74,7 @@ public static class RestClient
             MaxTimeout = _maxTimeout,
             BaseUrl = new Uri($"{_weatherUrl}/forecast?lat={lat}&lon={lon}&units=metric&appid={_APIKey}")
         });
+
         var request = new RestRequest("");
         var restResponse = client.Execute(request);
 

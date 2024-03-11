@@ -11,6 +11,7 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Styles/HoverableButton.xaml" />
                 <ResourceDictionary Source="Styles/MainWindowStyle.xaml" />
+                <ResourceDictionary Source="Styles/RoundedComboBox.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
             <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
@@ -41,28 +42,36 @@
                         <TextBlock Grid.Column="0" x:Name="header" Background="Transparent" Foreground="White"
                                    FontFamily="{StaticResource Poppins-Medium}"
                                    Text="Weather Forecaster" Margin="15 5 0 5" VerticalAlignment="Center" />
-                        <Grid Grid.Column="1">
 
+                        <Grid Grid.Column="1">
                             <TextBox GotFocus="CitiesSearchBoxGotFocus" Text="{Binding Path=cities.CitiesTextBoxText}"
                                      LostKeyboardFocus="CitySearchBoxOnLostKeyboardFocus"
                                      TextChanged="CitySearchBoxTextChanged"
                                      x:Name="CitiesSearchBox"
                                      LostFocus="OnComboBoxLostFocus"
-                                     Panel.ZIndex="1"
-                                     Foreground="Black"
-                                     Background="White"
+                                     Panel.ZIndex="1" Margin="15 0 0 0"
+                                     Foreground="Black" 
+                                     BorderBrush="Transparent" BorderThickness="0"
+                                     Background="Transparent"
                                      FontFamily="{StaticResource Poppins-Medium}"
                                      VerticalContentAlignment="Center"
-                                     Focusable="{Binding Path=cities.IsCitiesTextBlockVisible, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay, ConverterParameter=invert}" />
+                                     Focusable="{Binding Path=cities.IsCitiesTextBlockVisible, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay, ConverterParameter=invert}" >
+                                <TextBox.Resources>
+                                    <Style TargetType="{x:Type Border}">
+                                        <Setter Property="CornerRadius" Value="15"/>
+                                    </Style>
+                                </TextBox.Resources>
+                            </TextBox>
 
-                            <ComboBox x:Name="CitiesComboBox" IsDropDownOpen="{Binding Path=cities.IsComboBoxEnabled}"
+                            <ComboBox x:Name="CitiesComboBox" IsDropDownOpen="{Binding Path=cities.IsComboBoxEnabled}" 
                                       ItemsSource="{Binding Path=cities.CitiesList}" MaxDropDownHeight="100"
                                       IsEnabled="False" Foreground="Black"
                                       SelectionChanged="CitiesComboBoxSelectionChanged"
                                       FontFamily="{StaticResource Poppins-Medium}"
                                       Background="Transparent" BorderBrush="Transparent" VerticalAlignment="Center"
-                                      MinHeight="30" VerticalContentAlignment="Center" />
+                                      MinHeight="30" VerticalContentAlignment="Center" Style="{StaticResource RoundedComboBox}"/>
                         </Grid>
+
                         <Button Style="{StaticResource HoverableButton}" Background="Transparent"
                                 BorderBrush="Transparent"
                                 Grid.Column="3" HorizontalAlignment="Left" Content="-" Height="15" Name="button1"

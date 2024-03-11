@@ -1,11 +1,14 @@
 ﻿using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 using ABI.Windows.Devices.Sensors;
 using WeatherForecaster.Rest;
 using WeatherForecaster.Rest.JsonClasses;
+using WeatherForecaster.Styles;
 using WeatherForecaster.ViewModels;
 
 namespace WeatherForecaster;
@@ -14,6 +17,7 @@ public partial class Home : Page
 {
     private readonly CitiesViewModel m_citiesViewModel;
     private readonly CurrentWeatherViewModel m_currentWeatherViewModel = new();
+    private readonly ForecastViewModel m_forecastViewModel = new();
 
     public Home(CitiesViewModel ctv)
     {
@@ -22,6 +26,8 @@ public partial class Home : Page
         InitializeComponent();
 
         InitializeWeather();
+        InitializeForecast();
+
         DataContext = new
         {
             cities = m_citiesViewModel,
@@ -69,6 +75,32 @@ public partial class Home : Page
         m_currentWeatherViewModel.UpdateMinute = currentTime.Minute;
 
         ((MainWindow)System.Windows.Application.Current.MainWindow).UpdateLayout();
+    }
+
+    private void AddForecastOnAPanel()
+    {
+        foreach (var btn in m_forecastViewModel.HourlyForecast.Select(item => new ForecastButton
+                 {
+                     Margin = new Thickness(5),
+                     Width = 100,
+                     Date = String.Concat(item.DtTxt.Split(" ")[1].Split(":")[0], ':', item.DtTxt.Split(" ")[1].Split(":")[1]),
+                     DayTemp = item.Main.Temp,
+                     NightTemp = item.Main.Temp - 2,
+                     Style = FindResource("ForecastButtonStyle") as Style
+                 }))
+        {
+            ForecastPanel.Children.Add(btn);
+        }
+    }
+
+    private void InitializeForecast()
+    {
+        var latAndLong = RestClient.GetLatAndLonFromCity("London");
+        var forecast = RestClient.GetFiveDayForecast(latAndLong[0].latitude, latAndLong[0].longitude);
+
+        m_forecastViewModel.HourlyForecast = forecast.ForecastList;
+
+        AddForecastOnAPanel();
     }
 
     private CurrentWeather RequestWeather(string city)

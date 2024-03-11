@@ -36,14 +36,16 @@ namespace WeatherForecaster.Rest
 
         public class InnerWeather
         {
+            [JsonProperty(PropertyName = "id")] public int id;
+
+            [JsonProperty(PropertyName = "main")] public string main;
+
             [JsonProperty(PropertyName = "description")]
             public string description;
 
             [JsonProperty(PropertyName = "icon")] public string icon;
 
-            [JsonProperty(PropertyName = "id")] public int id;
 
-            [JsonProperty(PropertyName = "main")] public string main;
         }
 
         public class Temp
@@ -104,11 +106,12 @@ namespace WeatherForecaster.Rest
 
         public class Wind
         {
+            [JsonProperty(PropertyName = "speed")] public double speed;
+
             [JsonProperty(PropertyName = "deg")] public int deg;
 
             [JsonProperty(PropertyName = "gust")] public double gust;
 
-            [JsonProperty(PropertyName = "speed")] public double speed;
         }
 
         public class Clouds
@@ -237,7 +240,7 @@ namespace WeatherForecaster.Rest
             [JsonProperty(PropertyName = "visibility")]
             public int Visibility { get; set; }
 
-            [JsonProperty(PropertyName = "pop")] public int Pop { get; set; }
+            [JsonProperty(PropertyName = "pop")] public double Pop { get; set; }
 
             [JsonProperty(PropertyName = "sys")] public Pod pod { get; set; }
 
@@ -260,7 +263,7 @@ namespace WeatherForecaster.Rest
 
             [JsonProperty(PropertyName = "cnt")] public int Count { get; set; }
 
-            [JsonProperty(PropertyName = "list")] public List<ForecastWeather> List { get; set; }
+            [JsonProperty(PropertyName = "list")] public List<ForecastWeather> ForecastList { get; set; }
         }
 
         public class AirPollution
