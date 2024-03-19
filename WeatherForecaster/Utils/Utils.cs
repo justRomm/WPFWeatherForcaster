@@ -43,7 +43,10 @@ public static class Utils
                 return true;
             }
 
-            if (child.TryFindVisualChildByName(childElementName, out childElement)) return true;
+            if (child.TryFindVisualChildByName(childElementName, out childElement))
+            {
+                return true;
+            }
         }
 
         return false;
@@ -52,7 +55,10 @@ public static class Utils
 
     public static T FindControl<T>(UIElement parent, Type targetType, string ControlName) where T : FrameworkElement
     {
-        if (parent == null) return null;
+        if (parent == null)
+        {
+            return null;
+        }
 
         if (parent.GetType() == targetType && ((T)parent).Name == ControlName) return (T)parent;
 

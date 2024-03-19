@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
@@ -22,7 +23,7 @@ public class BooleanToVisibilityConverter : IValueConverter
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"BooleanToInvisibilityConverter.Convert Error:{ex.Message}");
+            Debug.WriteLine($"BooleanToInvisibilityConverter.Convert Error:{ex.Message}");
         }
 
         return DependencyProperty.UnsetValue;

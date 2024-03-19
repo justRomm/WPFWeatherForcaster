@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
@@ -17,7 +18,7 @@ public class DoubleToStringConverter : IValueConverter
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"DoubleToStringConverter.Convert Error:{ex.Message}");
+            Debug.WriteLine($"DoubleToStringConverter.Convert Error:{ex.Message}");
         }
 
         return DependencyProperty.UnsetValue;
