@@ -9,18 +9,19 @@
         <Setter Property="Cursor" Value="Hand"/>
         <Setter Property="Margin" Value="5"/>
         <Setter Property="OverridesDefaultStyle" Value="True"></Setter>
-        <Setter Property="Background" Value="Transparent"></Setter>
+        <Setter Property="Background" Value="White"></Setter>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
                     <Grid>
                     <Border
-                    x:Name="border"
-                    Background="{TemplateBinding Background}"
-                    BorderBrush="{TemplateBinding BorderBrush}"
-                    BorderThickness="{TemplateBinding BorderThickness}"
-                    CornerRadius="20"
-                    RenderTransformOrigin="0.5 0.5">
+                        x:Name="border"
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        Opacity="0.1"
+                        CornerRadius="20"
+                        RenderTransformOrigin="0.5 0.5">
 
                         <Border.RenderTransform>
                             <ScaleTransform x:Name="buttonTransform" CenterX="0.5" CenterY="0.5" ScaleX="1" ScaleY="1" />
@@ -93,7 +94,7 @@
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter TargetName="border" Property="Background" Value="White" />
-                            <Setter TargetName="border" Property="Opacity" Value="0.1" />
+                            <Setter TargetName="border" Property="Opacity" Value="0.3" />
                             <Setter TargetName="border" Property="BorderBrush" Value="Transparent" />
                             <Setter TargetName="border" Property="Margin" Value="-1" />
                             <Setter TargetName="PART_ContentPresenter" Property="TextBlock.Foreground"
