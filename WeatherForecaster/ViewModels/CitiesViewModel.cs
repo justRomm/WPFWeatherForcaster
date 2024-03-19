@@ -22,7 +22,7 @@ public class CitiesViewModel : DependencyObject
         typeof(string), typeof(CitiesViewModel), new PropertyMetadata("Enter your city"));
 
     private static readonly DependencyProperty SelectedCityDp = DependencyProperty.Register("SelectedCity",
-        typeof(string), typeof(CitiesViewModel), new PropertyMetadata("London"));
+        typeof(string), typeof(CitiesViewModel), new PropertyMetadata("Kyiv"));
 
     public List<string> CitiesList
     {

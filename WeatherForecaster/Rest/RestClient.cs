@@ -5,21 +5,39 @@ using System.Net;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using RestSharp;
+using WeatherForecaster.DataProtection;
 using WeatherForecaster.Rest.JsonClasses;
 
 namespace WeatherForecaster.Rest;
 
-public static class RestClient
+public class RestClient
 {
-    private const string _APIKey = "fe14f9bc8fcee04ee1fdb69408290496";
+    private static string _APIKey;
     private const int _maxTimeout = 20000;
     private const string _weatherUrl = "https://api.openweathermap.org/data/2.5";
     private const string _geoUrl = "http://api.openweathermap.org/geo/1.0";
+    private static RestClient _instance;
 
     private static void ThrowOnErrorResponse(RestResponse response)
     {
         if (!response.IsSuccessful || response.StatusCode != HttpStatusCode.OK)
             throw new RestClientErrorException(response);
+    }
+
+    private RestClient()
+    {
+        var protector = new ApiProtector();
+        protector.RetrieveData();
+        _APIKey = protector.GetApi();
+    }
+
+    public static RestClient GetInstance()
+    {
+        if (_instance == null)
+        {
+            _instance = new RestClient();
+        }
+        return _instance;
     }
 
     public static CurrentWeather GetCurrentWeather(double lat, double lon)
@@ -37,7 +55,7 @@ public static class RestClient
         return JsonConvert.DeserializeObject<CurrentWeather>(restResponse.Content);
     }
 
-    public static async Task<CurrentWeather> GetCurrentWeatherAsync(double lat, double lon)
+    public async Task<CurrentWeather> GetCurrentWeatherAsync(double lat, double lon)
     {
         using var client = new RestSharp.RestClient(new RestClientOptions
         {
@@ -52,7 +70,7 @@ public static class RestClient
         return JsonConvert.DeserializeObject<CurrentWeather>(restResponse.Content);
     }
 
-    public static List<Location> GetLatAndLonFromCity(string city)
+    public List<Location> GetLatAndLonFromCity(string city)
     {
         using var client = new RestSharp.RestClient(new RestClientOptions
         {
@@ -67,7 +85,7 @@ public static class RestClient
         return JsonConvert.DeserializeObject<List<Location>>(restResponse.Content);
     }
     
-    public static WeatherForecast GetFiveDayForecast(double lat, double lon)
+    public WeatherForecast GetFiveDayForecast(double lat, double lon)
     {
         using var client = new RestSharp.RestClient(new RestClientOptions
         {

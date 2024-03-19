@@ -28,7 +28,8 @@ public partial class MainWindow : Window
         "Dallas",
         "San Jose",
         "Austin",
-        "Jacksonville"
+        "Jacksonville",
+        "Kyiv"
     ];
 
     private NavigatingCancelEventArgs m_navArgs;

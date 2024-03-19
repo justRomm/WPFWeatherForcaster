@@ -6,6 +6,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using ABI.Windows.Devices.Sensors;
+using WeatherForecaster.DataProtection;
 using WeatherForecaster.Rest;
 using WeatherForecaster.Rest.JsonClasses;
 using WeatherForecaster.Styles;
@@ -95,8 +96,8 @@ public partial class Home : Page
 
     private void InitializeForecast()
     {
-        var latAndLong = RestClient.GetLatAndLonFromCity("London");
-        var forecast = RestClient.GetFiveDayForecast(latAndLong[0].latitude, latAndLong[0].longitude);
+        var latAndLong = RestClient.GetInstance().GetLatAndLonFromCity("Kyiv");
+        var forecast = RestClient.GetInstance().GetFiveDayForecast(latAndLong[0].latitude, latAndLong[0].longitude);
 
         m_forecastViewModel.HourlyForecast = forecast.ForecastList;
 
@@ -105,20 +106,18 @@ public partial class Home : Page
 
     private CurrentWeather RequestWeather(string city)
     {
-        var latAndLong = RestClient.GetLatAndLonFromCity(city);
+        var latAndLong = RestClient.GetInstance().GetLatAndLonFromCity(city);
         return RestClient.GetCurrentWeather(latAndLong[0].latitude, latAndLong[0].longitude);
     }
 
     private void StartAnimation()
     {
         LoadingMessage.Visibility = Visibility.Visible;
-        System.Diagnostics.Debug.WriteLine("Changed");
     }
 
     private void StopAnimation()
     {
         LoadingMessage.Visibility = Visibility.Collapsed;
-        System.Diagnostics.Debug.WriteLine("Changed");
     }
 
     private void UpdateInfo()
