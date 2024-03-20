@@ -53,7 +53,6 @@ namespace WeatherForecaster.DataProtection
                         stream.Read(content);
                         var unserialised = DataEncryptor.Decrypt(content);
                         _data = JsonConvert.DeserializeObject<DataContainer>(unserialised);
-                        Debug.WriteLine($"Got Data {_data.ApiKey}");
                     }
                 }
             }
@@ -78,7 +77,6 @@ namespace WeatherForecaster.DataProtection
                         var serialised = JsonConvert.SerializeObject(_data);
                         var content = DataEncryptor.Encrypt(serialised);
                         stream.Write(content);
-                        Debug.WriteLine($"Set Data {_data.ApiKey}");
                     }
                 }
             }

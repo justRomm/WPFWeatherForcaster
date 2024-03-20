@@ -27,7 +27,6 @@ public class RestClient
     private RestClient()
     {
         var protector = new ApiProtector();
-        protector.RetrieveData();
         _APIKey = protector.GetApi();
     }
 
