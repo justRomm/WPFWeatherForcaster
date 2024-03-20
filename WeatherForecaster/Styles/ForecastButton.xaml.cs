@@ -25,13 +25,13 @@ namespace WeatherForecaster.Styles
             set => SetValue(DayTempDp, value);
         }
 
-        public static readonly DependencyProperty NightTempDp = DependencyProperty.Register("NightTemp", typeof(double), typeof(ForecastButton));
+        //public static readonly DependencyProperty NightTempDp = DependencyProperty.Register("NightTemp", typeof(double), typeof(ForecastButton));
 
-        public double NightTemp
-        {
-            get => (double)GetValue(NightTempDp);
-            set => SetValue(NightTempDp, value);
-        }
+        //public double NightTemp
+        //{
+        //    get => (double)GetValue(NightTempDp);
+        //    set => SetValue(NightTempDp, value);
+        //}
 
         public ForecastButton() : base()
         {

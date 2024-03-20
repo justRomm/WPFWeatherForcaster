@@ -205,9 +205,10 @@
                 </Button.Template>
             </Button>
 
-            <WrapPanel Height="140" Width="820" x:Name="ForecastPanel" />
-
-            <Button Content="forward" Width="25" Height="25" HorizontalAlignment="Right" Margin="15 0 25 0"
+                <ScrollViewer HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Disabled" Width="820">
+                    <WrapPanel Height="140"  x:Name="ForecastPanel" />
+                </ScrollViewer>
+                <Button Content="forward" Width="25" Height="25" HorizontalAlignment="Right" Margin="15 0 25 0"
                     Background="Transparent"
                     BorderBrush="Transparent" BorderThickness="0" Style="{StaticResource HoverableButton}">
                 <Button.Template>

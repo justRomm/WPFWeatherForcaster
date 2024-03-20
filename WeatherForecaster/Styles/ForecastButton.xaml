@@ -78,13 +78,13 @@
                                     </TextBlock.Text>
                                 </TextBlock>
 
-                                <TextBlock  FontSize="12" FontFamily="{StaticResource Poppins-Medium}" Foreground="LightGray">
+                                <!--<TextBlock  FontSize="12" FontFamily="{StaticResource Poppins-Medium}" Foreground="LightGray">
                                     <TextBlock.Text>
                                         <MultiBinding StringFormat=" {0}°">
                                             <Binding RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=styles:ForecastButton}" Path="NightTemp" />
                                         </MultiBinding>
                                     </TextBlock.Text>
-                                </TextBlock>
+                                </TextBlock>-->
                             </StackPanel>
                             <ContentPresenter x:Name="PART_ContentPresenter"
                                               VerticalAlignment="Center"
