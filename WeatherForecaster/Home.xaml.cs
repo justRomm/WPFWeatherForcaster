@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -26,8 +27,7 @@ public partial class Home : Page
 
         InitializeComponent();
 
-        InitializeWeather();
-        InitializeForecast();
+        UpdateInfo();
 
         DataContext = new
         {
@@ -57,7 +57,8 @@ public partial class Home : Page
 
         if (currentWeather == null)
         {
-            currentWeather = RequestWeather(m_citiesViewModel.SelectedCity);
+            var latAndLong = RestClient.GetInstance().GetLatAndLonFromCity(m_citiesViewModel.SelectedCity);
+            currentWeather = RestClient.GetInstance().GetCurrentWeather(latAndLong[0].latitude, latAndLong[0].longitude);
         }
 
         m_currentWeatherViewModel.Temperature = currentWeather.main.temp;
@@ -75,7 +76,7 @@ public partial class Home : Page
         m_currentWeatherViewModel.UpdateHour = currentTime.Hour;
         m_currentWeatherViewModel.UpdateMinute = currentTime.Minute;
 
-        ((MainWindow)System.Windows.Application.Current.MainWindow).UpdateLayout();
+        ((MainWindow)Application.Current.MainWindow).UpdateLayout();
     }
 
     private void AddForecastOnAPanel()
@@ -84,9 +85,9 @@ public partial class Home : Page
                  {
                      Margin = new Thickness(5),
                      Width = 100,
-                     Date = String.Concat(item.DtTxt.Split(" ")[1].Split(":")[0], ':', item.DtTxt.Split(" ")[1].Split(":")[1]),
+                     Date = String.Concat(item.DtTxt.Split(" ")[1][..^3]),
                      DayTemp = item.Main.Temp,
-                     NightTemp = item.Main.Temp - 2,
+                     // NightTemp = item.Main.Temp - 2,
                      Style = FindResource("ForecastButtonStyle") as Style
                  }))
         {
@@ -94,20 +95,22 @@ public partial class Home : Page
         }
     }
 
-    private void InitializeForecast()
+    private void InitializeForecast(WeatherForecast data = null)
     {
-        var latAndLong = RestClient.GetInstance().GetLatAndLonFromCity("Kyiv");
-        var forecast = RestClient.GetInstance().GetFiveDayForecast(latAndLong[0].latitude, latAndLong[0].longitude);
+        var forecast = data;
+
+        if (forecast == null)
+        {
+            var latAndLong = RestClient.GetInstance().GetLatAndLonFromCity(m_citiesViewModel.SelectedCity);
+            forecast = RestClient.GetInstance().GetFiveDayForecast(latAndLong[0].latitude, latAndLong[0].longitude);
+        }
 
         m_forecastViewModel.HourlyForecast = forecast.ForecastList;
-
+        if (ForecastPanel.Children.Count > 0)
+        {
+            ForecastPanel.Children.Clear();
+        }
         AddForecastOnAPanel();
-    }
-
-    private CurrentWeather RequestWeather(string city)
-    {
-        var latAndLong = RestClient.GetInstance().GetLatAndLonFromCity(city);
-        return RestClient.GetCurrentWeather(latAndLong[0].latitude, latAndLong[0].longitude);
     }
 
     private void StartAnimation()
@@ -120,19 +123,44 @@ public partial class Home : Page
         LoadingMessage.Visibility = Visibility.Collapsed;
     }
 
-    private void UpdateInfo()
+    private async void UpdateInfo()
     {
         Dispatcher.Invoke(StartAnimation);
         var city = m_citiesViewModel.SelectedCity;
-        Task.Run(() =>
-        {
-            var data = RequestWeather(city);
+        var latAndLong = RestClient.GetInstance().GetLatAndLonFromCity(city);
+        CurrentWeather currentWeather = null;
+        WeatherForecast forecast = null;
 
-            Dispatcher.Invoke(() =>
+        Task taskResults = null;
+        try
+        {
+            taskResults = Task.WhenAll(
+                Task.Run(() =>
+                {
+                    currentWeather = RestClient.GetInstance().GetCurrentWeather(latAndLong[0].latitude, latAndLong[0].longitude);
+                }),
+                Task.Run(() =>
+                {
+                    forecast = RestClient.GetInstance().GetFiveDayForecast(latAndLong[0].latitude, latAndLong[0].longitude);
+                })
+            );
+            await taskResults;
+        }
+        catch (Exception e)
+        {
+            AggregateException exception = taskResults.Exception;
+            foreach (var error in exception.InnerExceptions)
             {
-                InitializeWeather(data);
-                StopAnimation();
-            });
+                Debug.WriteLine(error);
+            }
+            Debug.WriteLine(e);
+        }
+
+        Dispatcher.Invoke(() =>
+        {
+            InitializeWeather(currentWeather);
+            InitializeForecast(forecast);
+            StopAnimation();
         });
     }
 }

@@ -39,7 +39,7 @@ public class CurrentWeatherViewModel : DependencyObject
 
     public string Description
     {
-        get => GetValue(DescriptionDp) as string;
+        get => (string)GetValue(DescriptionDp);
         set => SetValue(DescriptionDp, value);
     }
 

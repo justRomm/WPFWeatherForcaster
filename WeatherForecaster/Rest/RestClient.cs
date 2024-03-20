@@ -39,7 +39,7 @@ public class RestClient
         return _instance;
     }
 
-    public static CurrentWeather GetCurrentWeather(double lat, double lon)
+    public CurrentWeather GetCurrentWeather(double lat, double lon)
     {
         using var client = new RestSharp.RestClient(new RestClientOptions
         {

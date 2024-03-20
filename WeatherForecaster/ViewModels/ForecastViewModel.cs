@@ -31,13 +31,13 @@ public class ForecastViewModel : DependencyObject
 
     public List<ForecastWeather> HourlyForecast
     {
-        get => GetValue(HourlyForecastDp) as List<ForecastWeather>;
+        get => (List<ForecastWeather>)GetValue(HourlyForecastDp);
         set => SetValue(HourlyForecastDp, value);
     }
 
     public List<DailyForecastItem> DailyForecast
     {
-        get => GetValue(DailyForecastDp) as List<DailyForecastItem>;
+        get => (List<DailyForecastItem>)GetValue(DailyForecastDp);
         set => SetValue(DailyForecastDp, value);
     }
 }
