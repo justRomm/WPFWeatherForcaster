@@ -57,7 +57,8 @@
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="10" />
                                 <RowDefinition Height="30" />
-                                <RowDefinition Height="50" />
+                                <RowDefinition Height="30" />
+                                <RowDefinition Height="20" />
                                 <RowDefinition Height="40" />
                             </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions>
@@ -65,11 +66,12 @@
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
 
-                            <TextBlock Grid.Column="1" Grid.Row="1" FontSize="12" FontFamily="{StaticResource Poppins-Medium}" Foreground="White" Text="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=styles:ForecastButton}, Path=Date}"/>
+                            <TextBlock Grid.Column="1" Grid.Row="1" FontSize="14" FontFamily="{StaticResource Poppins-Bold}" Foreground="White" Text="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=styles:ForecastButton}, Path=Weekday}"/>
+                            <TextBlock Grid.Column="1" Grid.Row="2" FontSize="12" FontFamily="{StaticResource Poppins-Medium}" Foreground="White" Text="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=styles:ForecastButton}, Path=DateHours}"/>
 
-                            <Image Grid.Column="1" Grid.Row="2"></Image>
+                            <Image Grid.Column="1" Grid.Row="3"></Image>
 
-                            <StackPanel Grid.Column="1" Grid.Row="3" Orientation="Horizontal">
+                            <StackPanel Grid.Column="1" Grid.Row="4" Orientation="Horizontal">
                                 <TextBlock  FontFamily="{StaticResource Poppins-Bold}" FontSize="16" Foreground="White">
                                     <TextBlock.Text>
                                         <MultiBinding StringFormat=" {0}°">

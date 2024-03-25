@@ -1,13 +1,9 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media;
-using ABI.Windows.Devices.Sensors;
-using WeatherForecaster.DataProtection;
 using WeatherForecaster.Rest;
 using WeatherForecaster.Rest.JsonClasses;
 using WeatherForecaster.Styles;
@@ -20,6 +16,8 @@ public partial class Home : Page
     private readonly CitiesViewModel m_citiesViewModel;
     private readonly CurrentWeatherViewModel m_currentWeatherViewModel = new();
     private readonly ForecastViewModel m_forecastViewModel = new();
+    private readonly int m_ForecastButtonWidth = 105;
+    private readonly int m_ForecastButtonMargin = 5;
 
     public Home(CitiesViewModel ctv)
     {
@@ -83,10 +81,10 @@ public partial class Home : Page
     {
         foreach (var btn in m_forecastViewModel.HourlyForecast.Select(item => new ForecastButton
                  {
-                     Margin = new Thickness(5),
-                     Width = 100,
-                     Date = String.Concat(item.DtTxt.Split(" ")[1][..^3]),
-                     DayTemp = item.Main.Temp,
+                     Margin = new Thickness(m_ForecastButtonMargin),
+                     Width = m_ForecastButtonWidth,
+                     Date = item.DtTxt,
+                     DayTemp = Math.Round(item.Main.Temp, 1),
                      // NightTemp = item.Main.Temp - 2,
                      Style = FindResource("ForecastButtonStyle") as Style
                  }))
@@ -162,5 +160,15 @@ public partial class Home : Page
             InitializeForecast(forecast);
             StopAnimation();
         });
+    }
+
+    private void BackForecastButtonOnClick(object sender, RoutedEventArgs e)
+    {
+        ForecastScrollViewer.ScrollToHorizontalOffset(ForecastScrollViewer.HorizontalOffset - (m_ForecastButtonWidth + 2 * m_ForecastButtonMargin));
+    }
+
+    private void ForwardForecastButtonOnClick(object sender, RoutedEventArgs e)
+    {
+        ForecastScrollViewer.ScrollToHorizontalOffset(ForecastScrollViewer.HorizontalOffset + (m_ForecastButtonWidth + 2 * m_ForecastButtonMargin));
     }
 }
