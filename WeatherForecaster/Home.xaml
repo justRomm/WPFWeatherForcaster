@@ -12,6 +12,7 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Styles/HoverableButton.xaml" />
+                <ResourceDictionary Source="Styles/HoverableRepeatButton.xaml" />
                 <ResourceDictionary Source="Styles/MainWindowStyle.xaml" />
                 <ResourceDictionary Source="Styles/ForecastButton.xaml" />
             </ResourceDictionary.MergedDictionaries>
@@ -185,16 +186,16 @@
 
         <StackPanel Grid.Row="8" Orientation="Horizontal">
 
-            <Button Width="25" Height="25" HorizontalAlignment="Left" Margin="25 0 15 0" Background="Transparent"
-                    BorderBrush="Transparent" BorderThickness="0" Style="{StaticResource HoverableButton}">
-                <Button.Template>
+            <RepeatButton x:Name="BackForecastButton"  Width="25" Height="25" HorizontalAlignment="Left" Margin="25 0 15 0" Background="Transparent"
+                    Click="BackForecastButtonOnClick" BorderBrush="Transparent" BorderThickness="0" Style="{StaticResource HoverableRepeatButton}">
+                <RepeatButton.Template>
                     <ControlTemplate>
                         <Image Width="7" Height="12">
                             <Image.Source>
                                 <DrawingImage>
                                     <DrawingImage.Drawing>
                                         <DrawingGroup ClipGeometry="M0,0 V12 H7 V0 H0 Z">
-                                            <GeometryDrawing Brush="#FF686868"
+                                            <GeometryDrawing Brush="White"
                                                              Geometry="F1 M7,12z M0,0z M6.70998,0.70998C6.31998,0.31998,5.68998,0.31998,5.29998,0.70998L0.70998,5.29998C0.31998,5.68998,0.31998,6.31998,0.70998,6.70998L5.29998,11.3C5.68998,11.69 6.31998,11.69 6.70998,11.3 7.09998,10.91 7.09998,10.28 6.70998,9.88998L2.82998,5.99998 6.70998,2.11998C7.09998,1.72998,7.08998,1.08998,6.70998,0.70998z" />
                                         </DrawingGroup>
                                     </DrawingImage.Drawing>
@@ -202,23 +203,23 @@
                             </Image.Source>
                         </Image>
                     </ControlTemplate>
-                </Button.Template>
-            </Button>
+                </RepeatButton.Template>
+            </RepeatButton>
 
-                <ScrollViewer HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Disabled" Width="820">
-                    <WrapPanel Height="140"  x:Name="ForecastPanel" />
+                <ScrollViewer x:Name="ForecastScrollViewer" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Disabled" Width="800">
+                    <WrapPanel Height="140"  x:Name="ForecastPanel"/>
                 </ScrollViewer>
-                <Button Content="forward" Width="25" Height="25" HorizontalAlignment="Right" Margin="15 0 25 0"
-                    Background="Transparent"
-                    BorderBrush="Transparent" BorderThickness="0" Style="{StaticResource HoverableButton}">
-                <Button.Template>
+                <RepeatButton x:Name="ForwardForecastButton" Content="forward" Width="25" Height="25" HorizontalAlignment="Right" Margin="15 0 25 0"
+                    Background="Transparent" Click="ForwardForecastButtonOnClick"
+                    BorderBrush="Transparent" BorderThickness="0" Style="{StaticResource HoverableRepeatButton}">
+                <RepeatButton.Template>
                     <ControlTemplate>
                         <Image Width="7" Height="12">
                             <Image.Source>
                                 <DrawingImage>
                                     <DrawingImage.Drawing>
                                         <DrawingGroup ClipGeometry="M0,0 V12 H7 V0 H0 Z">
-                                            <GeometryDrawing Brush="#FF686868"
+                                            <GeometryDrawing Brush="White"
                                                              Geometry="F1 M7,12z M0,0z M0.70998,0.70998C1.09998,1.09998,1.72998,1.09998,2.11998,0.70998L6.70998,5.29998C7.09998,5.68998,7.09998,6.31998,6.70998,6.70998L2.11998,11.3C1.72998,11.69,1.09998,11.69,0.70998,11.3 0.31998,10.91,0.31998,10.28,0.70998,9.88998L4.58998,5.99998,0.70998,2.11998C0.31998,1.72998,0.32998,1.08998,0.70998,0.70998z" />
                                         </DrawingGroup>
                                     </DrawingImage.Drawing>
@@ -226,8 +227,8 @@
                             </Image.Source>
                         </Image>
                     </ControlTemplate>
-                </Button.Template>
-            </Button>
+                </RepeatButton.Template>
+            </RepeatButton>
         </StackPanel>
     </Grid>
     </Grid>
