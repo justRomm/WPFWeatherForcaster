@@ -208,4 +208,14 @@ public partial class MainWindow : Window
 
         m_cities.IsCitiesTextBlockVisible = true;
     }
+
+    private void CitiesSearchBox_OnKeyDown(object sender, KeyEventArgs e)
+    {
+        if (e.Key != Key.Enter)
+        {
+            return;
+        }
+
+        m_cities.SelectedCity = (sender as TextBox).Text;
+    }
 }

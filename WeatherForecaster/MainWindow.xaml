@@ -55,6 +55,7 @@
                                      Background="Transparent"
                                      FontFamily="{StaticResource Poppins-Medium}"
                                      VerticalContentAlignment="Center"
+                                     KeyDown="CitiesSearchBox_OnKeyDown"
                                      Focusable="{Binding Path=cities.IsCitiesTextBlockVisible, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay, ConverterParameter=invert}" >
                                 <TextBox.Resources>
                                     <Style TargetType="{x:Type Border}">
