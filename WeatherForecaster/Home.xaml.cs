@@ -33,7 +33,7 @@ public partial class Home : Page
             weather = m_currentWeatherViewModel
         };
 
-        m_citiesViewModel.SelectedCityChanged += UpdateInfo;
+        m_citiesViewModel.SearchCityChanged += UpdateInfo;
     }
 
     private static int CalculateDewPoint(double humidity, double temperature)
@@ -124,8 +124,15 @@ public partial class Home : Page
     private async void UpdateInfo()
     {
         Dispatcher.Invoke(StartAnimation);
-        var city = m_citiesViewModel.SelectedCity;
+        var city = m_citiesViewModel.SearchCity;
         var latAndLong = RestClient.GetInstance().GetLatAndLonFromCity(city);
+
+        if (latAndLong.Count == 0)
+        {
+            StopAnimation();
+            return;
+        }
+
         CurrentWeather currentWeather = null;
         WeatherForecast forecast = null;
 
@@ -159,6 +166,7 @@ public partial class Home : Page
             InitializeWeather(currentWeather);
             InitializeForecast(forecast);
             StopAnimation();
+            m_citiesViewModel.SelectedCity = m_citiesViewModel.SearchCity;
         });
     }
 

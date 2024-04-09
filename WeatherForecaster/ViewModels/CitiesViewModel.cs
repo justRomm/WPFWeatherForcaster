@@ -6,7 +6,7 @@ namespace WeatherForecaster.ViewModels;
 
 public class CitiesViewModel : DependencyObject
 {
-    public event Action SelectedCityChanged;
+    public event Action SearchCityChanged;
 
     private static readonly DependencyProperty CitiesListDp =
         DependencyProperty.Register("CitiesList", typeof(List<string>), typeof(CitiesViewModel));
@@ -22,6 +22,9 @@ public class CitiesViewModel : DependencyObject
         typeof(string), typeof(CitiesViewModel), new PropertyMetadata("Enter your city"));
 
     private static readonly DependencyProperty SelectedCityDp = DependencyProperty.Register("SelectedCity",
+        typeof(string), typeof(CitiesViewModel), new PropertyMetadata("Kyiv"));
+
+    private static readonly DependencyProperty SearchCityDp = DependencyProperty.Register("SearchCity",
         typeof(string), typeof(CitiesViewModel), new PropertyMetadata("Kyiv"));
 
     public List<string> CitiesList
@@ -54,7 +57,15 @@ public class CitiesViewModel : DependencyObject
         set
         {
             SetValue(SelectedCityDp, value);
-            SelectedCityChanged?.Invoke();
+        }
+    }
+    public string SearchCity
+    {
+        get => GetValue(SearchCityDp) as string;
+        set
+        {
+            SetValue(SearchCityDp, value);
+            SearchCityChanged?.Invoke();
         }
     }
 }

@@ -186,8 +186,7 @@ public partial class MainWindow : Window
 
         m_cities.CitiesTextBoxText = selectedItem;
 
-
-        m_cities.SelectedCity = selectedItem;
+        m_cities.SearchCity = selectedItem;
     }
 
     private void CitiesSearchBoxGotFocus(object sender, RoutedEventArgs e)
@@ -216,6 +215,6 @@ public partial class MainWindow : Window
             return;
         }
 
-        m_cities.SelectedCity = (sender as TextBox).Text;
+        m_cities.SearchCity = (sender as TextBox).Text;
     }
 }
